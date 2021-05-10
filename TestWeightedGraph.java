@@ -52,6 +52,6 @@
     //amir busuk
       graph1.addVertex("imran");
       graph1.addVertex("parit");
-      System.ou.printlin("add edge from imran - parit: " + graph1.addEdge("imran", "parit", 200)  );
+      System.out.printlin("add edge from imran - parit: " + graph1.addEdge("imran", "parit", 200)  );
    }
  }
