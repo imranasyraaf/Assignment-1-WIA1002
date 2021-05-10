@@ -48,10 +48,6 @@
       System.out.println("Neighbours of Kuching : " + graph1.getNeighbours("Kuching"));
       System.out.println("\nPrint Edges : " );
       graph1.printEdges();
-     
-    //amir busuk
-      graph1.addVertex("imran");
-      graph1.addVertex("parit");
-      System.out.println("add edge from imran - parit: " + graph1.addEdge("imran", "parit", 200)  );
+
    }
  }
