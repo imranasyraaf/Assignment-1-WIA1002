@@ -223,5 +223,64 @@ class WeightedGraph<T extends Comparable<T>, N extends Comparable <N>> {
       }  
    }
 
+   public boolean removeEdge(T source,T destination){
+      if (head==null)
+      return false;
+   if (!hasVertex(source) || !hasVertex(destination)) 
+      return false;
+   Vertex<T,N> sourceVertex = head;
+   while (sourceVertex!=null)	{
+      if ( sourceVertex.vertexInfo.compareTo( source ) == 0 )   {
+         // Reached source vertex, look for destination now 
+         Edge<T,N> currentEdge = sourceVertex.firstEdge;
+         Edge<T,N> TravelEdge = sourceVertex.firstEdge;
+         while (currentEdge != null) {
+            if (currentEdge.toVertex.vertexInfo.compareTo(destination)==0) {
+                if(currentEdge != sourceVertex.firstEdge){
+                    
+                   while(TravelEdge.nextEdge!=currentEdge)
+                       TravelEdge = TravelEdge.nextEdge;
+                }
+             
+       
+                
+                
+               if(currentEdge == sourceVertex.firstEdge){
+                    currentEdge.toVertex.outdeg--;
+                currentEdge.toVertex.indeg--;
+                   System.out.println("ggg");
+                  sourceVertex.firstEdge = currentEdge.nextEdge;
+                  
+               
+               }
+               else if(currentEdge.nextEdge!=null){
+                    currentEdge.toVertex.outdeg--;
+                currentEdge.toVertex.indeg--;
+                    currentEdge = currentEdge.nextEdge;
+               sourceVertex.firstEdge.nextEdge = currentEdge;
+                   
+               }
+               else{
+                   TravelEdge.toVertex.outdeg--;
+                   currentEdge = null;
+                   TravelEdge.nextEdge=currentEdge;
+                   
+                   
+               }
+               
+                
+            
+               return true;
+            }
+         
+            if(currentEdge.nextEdge!=null)
+            currentEdge=currentEdge.nextEdge;
+         }
+      }
+      sourceVertex=sourceVertex.nextVertex;
+   }  
+ return false;
+ }   
+
 }
 
