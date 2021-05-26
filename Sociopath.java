@@ -1,6 +1,6 @@
 public class Sociopath {
     public static void main(String[] args) {
-        
+        System.out.println("waklu");
     }
     
     public void Event1(){
