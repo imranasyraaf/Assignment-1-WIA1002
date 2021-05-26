@@ -1,8 +1,9 @@
 
  public class TestWeightedGraph {
    public static void main(String[] args) {
+      System.out.println("ahlloooo");
       WeightedGraph<String, Integer> graph1 = new WeightedGraph<>();
-      String[] cities = {"Alor Setar", "Kuching", "Langkawi", "Melaka", "Penang", "Tawau"};
+      String[] cities = { "Kuching", "Langkawi", "Melaka", "Penang", "Tawau"};
       for (String i : cities)
          graph1.addVertex(i);
 
