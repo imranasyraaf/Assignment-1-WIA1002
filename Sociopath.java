@@ -1,6 +1,7 @@
 public class Sociopath {
     public static void main(String[] args) {
-        System.out.println("waklu");
+        
+        Event6();
     }
     
     public void Event1(){
@@ -27,8 +28,134 @@ public class Sociopath {
 
     }
     
-    public void Event6(){
-        //code for event 6
+    
+    //Event 6 -----------------------------------------------------------------------------------------------
+    public static ArrayList<Integer>[] adjacencyList;
+    public static ArrayList<Integer[]> sequence = new ArrayList<>(); //to hold all the possible paths
+
+    // A recursive function to find
+    // all paths from 'u' to 'd'.
+    // isVisited[] keeps track of
+    // vertices in current path.
+    // localPathList<> stores actual
+    // vertices in the current path
+    public static void findAllPathsUtil(Integer u, Integer d,
+                                         boolean[] isVisited,
+                                         ArrayList<Integer> localPathList) {
+
+        if (u.equals(d)) {
+            // if match found then no need to traverse more till depth
+            //add the path to the sequence list
+            Integer[] tempArr = new Integer[localPathList.size()];
+            for (int n = 0; n < localPathList.size(); n++) {
+                tempArr = localPathList.toArray(new Integer[n]);
+            }
+            sequence.add(tempArr);
+            return;
+        }
+
+        // Mark the current node
+        isVisited[u] = true;
+
+        // Recur for all the vertices
+        // adjacent to current vertex
+        for (Integer i : adjacencyList[u]) {
+            if (!isVisited[i]) {
+                // store current node
+                // in path[]
+                localPathList.add(i);
+                findAllPathsUtil(i, d, isVisited, localPathList);
+
+                // remove current node
+                // in path[]
+                localPathList.remove(i);
+            }
+        }
+        // Mark the current node
+        isVisited[u] = false;
+    }
+
+    private static void findAllPaths(int s, int d, int v) {
+        boolean[] isVisited = new boolean[v];   //v = number of vertex
+        ArrayList<Integer> pathList = new ArrayList<>();
+
+        // add source to path[]
+        pathList.add(s);
+
+        // Call recursive utility
+        findAllPathsUtil(s, d, isVisited, pathList);
+    }
+
+    //reverse a sequence to find redundancy(non-unique)
+    public static Integer[] reverse(Integer[] intArr) {
+        Integer[] temp = new Integer[intArr.length];
+        int index = 0;
+        for (int i = intArr.length - 1; i >= 0; i--) {
+            temp[index] = intArr[i];
+            index++;
+        }
+        return temp;
+    }
+
+    public static void Event6() {
+        UnweightedGraph<Integer, Integer> graph6 = new UnweightedGraph<>();
+        graph6.addVertex(0);
+        Scanner scan = new Scanner(System.in);
+
+        //initialize the graph
+        System.out.println("Enter the number of friendships: ");
+        int numOfFriendship = scan.nextInt();
+
+        for (int i = 1; i <= numOfFriendship; i++) {
+            System.out.println("Friendship " + i + " (Enter 2 individuals): ");
+            int friend1 = scan.nextInt();
+            int friend2 = scan.nextInt();
+            graph6.addVertex(friend1);
+            graph6.addVertex(friend2);
+            graph6.addUndirectedEdge(friend1, friend2);
+        }
+        //graph6.printEdges();
+        int v = graph6.getSize();
+
+        //create the adjacency list
+        adjacencyList = new ArrayList[graph6.getSize()];
+        for (int i = 0; i < graph6.getSize(); i++) {
+            adjacencyList[i] = graph6.getNeighbours(graph6.getVertex(i));
+        }
+
+        //find all the possible paths
+        for (int i = 1; i < v; i++) {
+            for (int j = 1; j < v; j++) {
+                if (i != j) {
+                    findAllPaths(i, j, v);
+                }
+            }
+        }
+        //remove any non-unique sequence
+        for (int i = sequence.size() - 1; i >= 0; i--) {
+            for (int j = 0; j < sequence.size(); j++) {
+                if (Arrays.equals(sequence.get(j), reverse(sequence.get(i)))) {
+                    sequence.remove(i);
+                    break;
+                }
+            }
+        }
+        //sort the sequence according to length to look nicer
+        ArrayList<Integer[]> sortList = new ArrayList<>();
+        for (int i = 2; i < v; i++) {
+            for (int j = 0; j < sequence.size(); j++) {
+                if (sequence.get(j).length == i) {
+                    sortList.add(sequence.get(j));
+                }
+            }
+        }
+        //display the final list and output
+        System.out.println("Number of possible friendship you can form: " + sortList.size());
+        int index = 1;
+        for (Integer[] x : sortList) {
+            System.out.println(index +". "+Arrays.toString(x));
+            index++;
+        }
 
     }
 }
