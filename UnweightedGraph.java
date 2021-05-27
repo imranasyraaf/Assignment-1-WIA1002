@@ -253,70 +253,47 @@ public class UnweightedGraph<T extends Comparable<T>, N extends Comparable <N>> 
         return false;
     }
 
-    public boolean removeEdge(T source, T destination){
-        //if graph is empty (cannot remove edge)
-        if (head == null) {
+   public boolean removeEdge(T source, T destination){
+        if(head == null){
             return false;
         }
-        //if vertices do not exist (cannot remove edge that does not exist)
-        if (!hasEdge(source, destination)) {
+
+        if(!hasVertex(source) || !hasVertex(destination)){
             return false;
         }
+
         Vertex<T,N> sourceVertex = head;
-        while (sourceVertex != null) {
-            //finding the source vertex
-            if (sourceVertex.vertexInfo.compareTo(source) == 0) {
-                // Reached source vertex, look for destination now
+        while(sourceVertex != null){
+            if(sourceVertex.vertexInfo.compareTo(source) == 0){
                 Edge<T,N> currentEdge = sourceVertex.firstEdge;
-                /*
-                Edge<T,N> prevEdge = currentEdge;
-                while (currentEdge != null) {
-                    //finding edge
-                    if (currentEdge.toVertex.vertexInfo.compareTo(destination) == 0){
-                        // destination vertex found
-                        break;
-                    }
-                    prevEdge = currentEdge;
-                    currentEdge = currentEdge.nextEdge;
-                }
-                Edge<T,N> tempEdge = currentEdge.nextEdge;
-                currentEdge.toVertex.indeg--;
-                sourceVertex.outdeg--;
-                currentEdge.clear();
-                prevEdge.nextEdge = tempEdge;
-                return true;
-                */
-                //If destination is inside first edge
-                if (currentEdge != null) {
-                    if (sourceVertex.firstEdge.toVertex.vertexInfo.compareTo(destination) == 0) {
+                Edge<T,N> previousEdge = currentEdge;
+
+                while(currentEdge != null){
+                    if(currentEdge.toVertex.vertexInfo.compareTo(destination) == 0){
+                        N removedWeight = currentEdge.weight;
+                        if(currentEdge == sourceVertex.firstEdge){
+                            sourceVertex.firstEdge = currentEdge.nextEdge;
+                        }
+                        else{
+                            previousEdge.nextEdge = currentEdge.nextEdge;
+                        }
+
                         currentEdge.toVertex.indeg--;
                         sourceVertex.outdeg--;
-                        currentEdge = sourceVertex.firstEdge.nextEdge;
-                        sourceVertex.firstEdge.clear();
-                        sourceVertex.firstEdge = currentEdge;
+                        currentEdge.nextEdge = null;
+                        currentEdge.toVertex = null;
+                        currentEdge.weight = null;
                         return true;
                     }
-                }
-                //If destination is inside other edges rather than first edge
-                while (currentEdge != null) {
-                    if (currentEdge.nextEdge.toVertex.vertexInfo.compareTo(destination) == 0) // destination vertex found
-                    {
-                        Edge<T,N> tempEdge = currentEdge.nextEdge;
-                        tempEdge.toVertex.indeg--;
-                        sourceVertex.outdeg--;
-                        currentEdge.nextEdge = tempEdge.nextEdge;
-                        tempEdge.clear();
-                        return true;
-                    }
+                    previousEdge = currentEdge;
                     currentEdge = currentEdge.nextEdge;
                 }
-
-
             }
             sourceVertex = sourceVertex.nextVertex;
         }
         return false;
     }
+
 
     //return all neighbours of the vertex into an arraylist
     public ArrayList<T> getNeighbours(T v){
