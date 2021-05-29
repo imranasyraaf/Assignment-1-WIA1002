@@ -32,7 +32,7 @@ public class Sociopath {
         System.out.println("Print Edges: ");
         graph1.printEdges();
         
-        Event2(graph1);
+        Event1and2(graph1);
         Event6();
     }
     
@@ -40,7 +40,8 @@ public class Sociopath {
         //code for event 1
     }
     
-    public static void Event2(WeightedGraph<Integer, Integer> graph1){
+    //Event 2 -----------------------------------------------------------------------------------------------
+    public static void Event1and2(WeightedGraph<Integer, Integer> graph1){
         //code for event 2
         System.out.println("This is Event 2: \n");
         Random random = new Random();
@@ -73,45 +74,47 @@ public class Sociopath {
         int cSize = friendB.size();
         int c = random.nextInt(cSize);
         c = friendB.get(c);
-        System.out.println("Person "+b+" chit-chat with Person "+c+" about you.\n");
+        //System.out.println("Person "+b+" chit-chat with Person "+c+" about you.\n");
         
         boolean temp = graph1.addEdge(b, a, 10); //event1 =you good at programming
         //Event 1
         int learn = random.nextInt(2);
-        if (learn == 0){ //good at programming
-            //System.out.println("Person "+b+" having fun learning with you.");
-            //System.out.println("Person "+b+" become friend with you.");
-            temp = graph1.addEdge(b, a, 10); 
-        }
-        else if (learn == 1) { //bad at programming
-            //System.out.println("You guys have an unpleasant teaching-learning session.");
-            //System.out.println("However, you guys still friends");
-            temp = graph1.addEdge(b, a, 10); 
-        }
-        int chitchat =random.nextInt(2) ; //Choose chit-chat event
-        if (chitchat == 0){ // good message
-            int getrep1 = 0;
-            boolean check = graph1.hasEdge(c, a);
-            if (check == true){
-                getrep1 = (int) (graph1.getEdgeRep(c, a));   
-            }
-            int getrep = (int) (graph1.getEdgeRep(b, a)*0.5);
-            getrep = getrep1+getrep;
-            System.out.println("Person "+b+" chit-chat with Person "+c+
-                " good things about you. ("+ graph1.addEdge(c, a, getrep)+")\n");
-        }
-        else if(chitchat == 1){
 
-            int getrep1 = 0;
-            boolean check = graph1.hasEdge(c, a);
-            if (check == true){
-                getrep1 = (int) (graph1.getEdgeRep(c, a));   
+      
+            if (learn == 0){ //good at programming
+            
+                System.out.println("Person "+b+" having fun learning with you.");
+                System.out.println("Person "+b+" become friend with you.");
+                temp = graph1.addEdge(b, a, 10); 
+
+                int getrep1 = 0;
+                boolean check = graph1.hasEdge(c, a);
+                if (check == true){
+                    getrep1 = (int) (graph1.getEdgeRep(c, a));   
+                }
+                int getrep = (int) (graph1.getEdgeRep(b, a)*0.5);
+                getrep = getrep1+getrep;
+                System.out.println("Person "+b+" chit-chat with Person "+c+" good things about you. ("+ graph1.addEdge(c, a, getrep)+")\n");
             }
-            int getrep = (int) (graph1.getEdgeRep(b, a));
-            getrep = getrep1-getrep;
-            System.out.println("Person "+b+" chit-chat with Person "+c+
-                " bad things about you. ("+ graph1.addEdge(c, a, getrep)+")\n");
-        }
+
+            else if (learn == 1) { //bad at programming
+
+                System.out.println("You guys have an unpleasant teaching-learning session.");
+                System.out.println("However, you guys still friends");
+                temp = graph1.addEdge(b, a, 10); 
+
+                int getrep1 = 0;
+                boolean check = graph1.hasEdge(c, a);
+                if (check == true){
+                    getrep1 = (int) (graph1.getEdgeRep(c, a));   
+                }
+                int getrep = (int) (graph1.getEdgeRep(b, a));
+                getrep = getrep1-getrep;
+                System.out.println("Person "+b+" chit-chat with Person "+c+" bad things about you. ("+ graph1.addEdge(c, a, getrep)+")\n");
+            }
+        
+
+        System.out.println("Person "+b+" chit-chat with Person "+c+" about you.\n");
         System.out.println("From Person " +c+ " point of view, Person "+a+" having "+graph1.getEdgeRep(c, a)+" rep points.\n ");
 
     }
