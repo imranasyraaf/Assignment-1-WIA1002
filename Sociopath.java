@@ -1,6 +1,38 @@
 public class Sociopath {
     public static void main(String[] args) {
         
+        WeightedGraph<Integer, Integer> graph1 = new WeightedGraph<>();
+        Random random = new Random();
+
+        //add vertex for all 10 students
+        for (int i = 1; i < 11; i++){
+            graph1.addVertex(i);   
+        }
+        
+        System.out.println("The number of students: " + graph1.getSize());
+        
+        //add the representation points to the students
+        boolean temp = graph1.addEdge(1, 2, 5);
+        temp = graph1.addEdge(1, 7, 4);
+        temp = graph1.addEdge(2, 1, 8);
+        temp = graph1.addEdge(2, 3, 5);
+        temp = graph1.addEdge(2, 5, 6);
+        temp = graph1.addEdge(2, 6, 9);
+        temp = graph1.addEdge(3, 2, 4);
+        temp = graph1.addEdge(4, 8, 7);
+        temp = graph1.addEdge(4, 10, 7);
+        temp = graph1.addEdge(5, 2, 2);
+        temp = graph1.addEdge(6, 2, 7);
+        temp = graph1.addEdge(7, 1, 3);
+        temp = graph1.addEdge(8, 4, 10);
+        temp = graph1.addEdge(9, 10, 5);
+        temp = graph1.addEdge(10, 4, 7);
+        temp = graph1.addEdge(10, 9, 6);
+
+        System.out.println("Print Edges: ");
+        graph1.printEdges();
+        
+        
         Event6();
     }
     
