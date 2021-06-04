@@ -210,9 +210,63 @@ public class Sociopath {
             graph1.AddLunch(vertex[i], Period[i]);
         }
 
+        System.out.println("------------");
+        graph1.printEdges();
+           System.out.println("------------");
+        CheckReputation(vertex,graph1);
+           System.out.println("------------");
 
+           int a = 1;//initailiazie main character
 
+           int[]checkrelia =relia(vertex,graph1); //Find reliability of each student by finding its average rep among his friend
+           System.out.println("----------------");
+           System.out.println("List of reliability:");
+         for (int i = 0; i < 10; i++) {//Get reliability of each student by getting their average rep among their friends
+     
+            System.out.println("Reliability student "+vertex[i]+" is "+checkrelia[i]);
+         }//sort the array astu
+             System.out.println("-----------------");
+             int[] prio =priorityReliability(checkrelia,vertex);//Arrange student with highest reliability at top
 
+             System.out.println("Priority list according to reliability");
+         	for (int i = prio.length-1; i >=0 ; i--) {//sort the student according to reliability ascending
+                    System.out.println("Student: "+prio[i]);
+        }
+            
+
+           //to find the lunch time of every student
+        int[] endtime = new int[10];//hold end time
+         int[] starttime = new int[10];//hold start time
+         FindLunchTime(vertex,starttime,endtime,graph1);//Find lunch time of every student
+
+         System.out.println("----------------------------------------");
+        System.out.println("List of the time taken for a student lunch:");
+          for (int i = 0; i < 10; i++) {//list of all students lunch period
+             System.out.println("lunch period for student "+vertex[i]+": "+starttime[i]+"-"+endtime[i]);
+        }
+          
+          //to find number of student that can have lunch together at one time
+          ArrayList<Integer> maxrep = new ArrayList<>();
+         //use student 1 as the main character
+         System.out.println("--------------------------");
+         int num =a;
+          System.out.println("The student that will find people to have lunch with is student:"+a);
+          System.out.println("His lunch time is at "+starttime[a-1]+"-"+endtime[a-1]);
+         // int num = scan.nextInt();
+          System.out.println("--------------------------------------");
+          FindMaxReputation(a,prio,starttime,endtime,maxrep);//Find max reputation per day for a student
+
+          System.out.println("List of people that student "+num+" can have lunch with:");
+          for (int i = 0; i <maxrep.size(); i++) {//from this data we can add 1 to each rep and add as new friends if they are no friends yet relative to the main character
+              System.out.println("The student can have lunch with is "+maxrep.get(i)+" which is at "+starttime[maxrep.get(i)-1]+
+                                    "-"+endtime[maxrep.get(i)-1]);
+        }
+
+        AddMaxRepPerDay(maxrep,a,graph1);//update all reputation a student can get with each people he have lunch with
+        System.out.println("------------");
+      graph1.printEdges();
+         System.out.println("------------");
+       CheckReputation(vertex,graph1);
 
 
 
@@ -413,7 +467,7 @@ public class Sociopath {
         }
     }
 
-    public static int[] relia (int[] vertex,int[][] Repmatrix,WeightedGraph<Integer,Integer> graph){//method find reliability
+    public static int[] relia (int[] vertex,WeightedGraph<Integer,Integer> graph){//method find reliability
           
          
         int[] listofreli = new int[10];
@@ -564,17 +618,7 @@ public class Sociopath {
              graph1.addEdge(maxrep.get(i), num, 1);
           
       }
-      for (int i = 0; i < maxrep.size(); i++) {
-        if(graph1.hasEdge(num, maxrep.get(i) )){
-          int hold = graph1.getEdgeWeight(num, maxrep.get(i));
-            System.out.println("huhuh");
-            graph1.removeEdge(num, maxrep.get(i));
-            graph1.addEdge(num, maxrep.get(i), hold+1);
-        }
-       else
-             graph1.addEdge(num, maxrep.get(i), 1);
-          
-      }
+      
     }
     
 
