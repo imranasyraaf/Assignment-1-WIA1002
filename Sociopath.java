@@ -143,7 +143,7 @@ public class Sociopath {
         graph1.printEdges();
     }
     
-    public void Event3(){
+    public void Event3(WeightedGraph<Integer, Integer> graph1){
         //code for event 3
 
     }
