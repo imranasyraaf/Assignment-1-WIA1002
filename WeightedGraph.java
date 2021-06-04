@@ -42,6 +42,78 @@ class WeightedGraph<T extends Comparable<T>, N extends Comparable <N>> {
       }
       return -1;
    }
+   public boolean AddDive(T v,int Dive)  {
+      if (hasVertex(v)==true)	{
+         Vertex<T,N> temp = head;
+         while (temp!=null) {
+            if ( temp.vertexInfo.compareTo( v ) == 0 ){
+                temp.dive = Dive;
+               return true;
+            }
+            temp=temp.nextVertex;
+         }
+      }
+      return false;
+   }
+    public int getDive(T v)  {
+      if (hasVertex(v)==true)	{
+         Vertex<T,N> temp = head;
+         while (temp!=null) {
+            if ( temp.vertexInfo.compareTo( v ) == 0 )
+               return temp.dive;
+            temp=temp.nextVertex;
+         }
+      }
+      return -1;
+   }
+     public boolean AddStart(T v,int start)  {
+      if (hasVertex(v)==true)	{
+         Vertex<T,N> temp = head;
+         while (temp!=null) {
+            if ( temp.vertexInfo.compareTo( v ) == 0 ){
+                temp.StartTime = start;
+               return true;
+            }
+            temp=temp.nextVertex;
+         }
+      }
+      return false;
+   }
+     public int getStart(T v)  {
+      if (hasVertex(v)==true)	{
+         Vertex<T,N> temp = head;
+         while (temp!=null) {
+            if ( temp.vertexInfo.compareTo( v ) == 0 )
+               return temp.StartTime;
+            temp=temp.nextVertex;
+         }
+      }
+      return -1;
+   }
+     public boolean AddLunch(T v,int Lunch){
+      if (hasVertex(v)==true)	{
+         Vertex<T,N> temp = head;
+         while (temp!=null) {
+            if ( temp.vertexInfo.compareTo( v ) == 0 ){
+                temp.lunchperiod= Lunch;
+               return true;
+            }
+            temp=temp.nextVertex;
+         }
+      }
+      return false;
+   }
+      public int getLunch(T v)  {
+      if (hasVertex(v)==true)	{
+         Vertex<T,N> temp = head;
+         while (temp!=null) {
+            if ( temp.vertexInfo.compareTo( v ) == 0 )
+               return temp.lunchperiod;
+            temp=temp.nextVertex;
+         }
+      }
+      return -1;
+   }
 
    public boolean hasVertex(T v)	{
       if (head==null)
