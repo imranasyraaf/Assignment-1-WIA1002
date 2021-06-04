@@ -4,10 +4,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Sociopath {
+    public static Random random = new Random();
     public static void main(String[] args) {
         
         WeightedGraph<Integer, Integer> graph1 = new WeightedGraph<>();
-        Random random = new Random();
+       
+       
 
         //add vertex for all 10 students
         for (int i = 1; i < 11; i++){
@@ -49,7 +51,7 @@ public class Sociopath {
     public static void Event1and2(WeightedGraph<Integer, Integer> graph1){
         //code for event 2
         System.out.println("This is Event 2: \n");
-        Random random = new Random();
+        // Random random = new Random();
         int a = random.nextInt(11); //decide you (a)
         while(a==0){
             a = random.nextInt(11);
@@ -144,9 +146,85 @@ public class Sociopath {
     }
     
     public void Event3(WeightedGraph<Integer, Integer> graph1){
-        //code for event 3
+        Scanner scan = new Scanner(System.in);
+        String [] day={"Monday","Tuesday","Wednesday","Thursday","Friday"};
+      
+      int [] vertex = {1,2,3,4,5,6,7,8,9,10};
+      int [] dive = new int[10];
+      int[] Period = new int[10];     
+      int[]Start = new int[10];
 
-    }
+
+        System.out.println("---------------");
+
+        System.out.println("Start time and time taken for lunch for every student:");
+        for (int i = 0; i < Period.length; i++) {
+            System.out.println("Student:"+(i+1));
+            for (int j = 0; j < day.length; j++) {
+            int temp2 =  random.nextInt(1355-1100)+1100;
+            int temp = random.nextInt(60-5)+5;
+              while((temp2%100)>=60){//start random
+                temp2=random.nextInt(1355-1100)+1100;
+            
+        }
+            while(changetime(temp2,temp)>1400){
+                 temp = random.nextInt(60-5)+5;
+            }
+            Start[i]+=temp2;
+            Period[i]+=temp;
+                System.out.print(day[j]+":["+"Start:"+temp2+" "+"Minutes:"+temp+"]"+" ");
+           
+            }
+            System.out.println("");
+        }
+        
+        //average time taken for lunch
+        for (int i = 0; i < Period.length; i++) {
+            Period[i]=Period[i]/5;
+        }
+        
+         //average start time for lunch
+        for (int i = 0; i < Start.length; i++) {
+            Start[i]=Start[i]/5;
+           Start[i]= changetime(Start[i],0);
+        }
+        
+        System.out.println("-----------------------");
+        System.out.println("Average start time for each student:");//For initialize lunch period
+        for (int i = 0; i < Start.length; i++) {
+            System.out.println("Student "+(i+1)+":"+Start[i]);
+        }
+        
+       
+      
+  
+        
+           System.out.println("-----------------------");
+        System.out.println("Average Lunch period(minute):");//For initialize lunch period
+        for (int i = 0; i < Period.length; i++) {
+            System.out.println("Student "+(i+1)+":"+Period[i]);
+        }
+
+        for (int i = 0; i < Start.length; i++) {//initialize start time and lunch period
+            graph1.AddStart(vertex[i], Start[i]);
+            graph1.AddLunch(vertex[i], Period[i]);
+        }
+
+
+
+
+
+
+
+
+
+
+
+       
+            
+        }
+        
+
     
     public void Event4(){
         //code for event 4
@@ -288,4 +366,277 @@ public class Sociopath {
         }
 
     }
+
+
+
+
+
+
+
+
+
+
+    public static int changetime(int start,int min){
+            
+           
+        int hold = start%100;
+        hold+=min;//start minute + min lunch
+        int end = start+min;
+        if(hold>=60){
+             int hold2 = start;
+            if(hold2%100!=0){
+                hold2=hold2-(hold2%100);
+            }
+            int hold3 = (hold-60)+100;
+            hold2+=hold3;
+            return hold2;
+            
+            
+        }else 
+        return end;
+            
+       }
+
+       public static void CheckReputation(int[]vertex,WeightedGraph<Integer,Integer> graph){
+        ArrayList<Integer> temp = new ArrayList<>();
+        System.out.println("List of reputation");
+        for (int i = 0; i < vertex.length; i++) {
+            temp = graph.getNeighbours(vertex[i]);
+            if(temp.size()!=0){
+            System.out.println("Student "+vertex[i]);
+            for (int j = 0; j < temp.size(); j++) {
+                System.out.print("[Student "+temp.get(j)+", Reputation:"+graph.getEdgeWeight(vertex[i], temp.get(j))+"]");
+            }
+            System.out.println("");
+            
+        }
+        }
+    }
+
+    public static int[] relia (int[] vertex,int[][] Repmatrix,WeightedGraph<Integer,Integer> graph){//method find reliability
+          
+         
+        int[] listofreli = new int[10];
+        int[] numberofedges = new int[10];
+        
+       
+          for (int i = 0; i < 10; i++) {
+              ArrayList<Integer> temp = graph.getNeighbours(vertex[i]);
+            for (int j = 0; j < temp.size(); j++) {
+             
+                  listofreli[i]+=graph.getEdgeWeight(vertex[i], temp.get(j));
+                    numberofedges[i]+=1;
+                
+                    
+                    
+            }
+            
+        }
+          int[] reliability = new int[10];
+          for (int i = 0; i < 10; i++) {
+              reliability[i] = listofreli[i]/numberofedges[i];
+             
+        }
+
+
+
+
+        return reliability; 
+        }   
+        
+        public static int[] priorityReliability (int[] checkrelia,int[]vertex){//method find reliability
+          
+         
+            int[] prio = vertex.clone();
+           for ( int pass = 1; pass < prio.length; pass++ ){
+                  
+            for ( int i = 0; i < prio.length - 1; i++ ) {
+                if ( checkrelia[ i ] > checkrelia[ i + 1 ] )  {
+                                    int hold = checkrelia[i];        
+                    checkrelia[i] = checkrelia[i+1];  
+                    checkrelia[i+1] = hold;
+                                    int pegang =prio[i];
+                                    prio[i]=prio[i+1];
+                                    prio[i+1]=pegang;
+                }
+                        
+                    }
+              } 
+            
+           
+    
+            return prio;
+            
+            }  
+
+            public static void FindLunchTime(int[] vertex,int[]starttime,int[]endtime,WeightedGraph<Integer,Integer>graph1){
+                for (int i = 0; i < starttime.length; i++) {//Get each student lunch period by adding starttime and lunch period
+              
+                starttime[i] = graph1.getStart(vertex[i]);
+                int end = graph1.getStart(vertex[i])+graph1.getLunch(vertex[i]);
+                int hold = end%100;
+                if(hold>=60){
+                    int hold2 = graph1.getStart(vertex[i]);
+                    if(hold2%100!=0){
+                        hold2=hold2-(hold2%100);
+                    }
+                    int hold3 = (hold-60)+100;
+                    hold2+=hold3;
+                    endtime[i]=hold2;
+                    continue;
+                }
+                endtime[i]=end;
+            
+            }
+          }
+
+          public static void FindMaxReputation(int a,int[]prio,int[]starttime,int[]endtime,ArrayList<Integer>maxrep){
+          
+            for (int i = prio.length-1; i >=0 ; i--) {
+                if(maxrep.isEmpty()&&(starttime[a-1]>=starttime[prio[i]-1]&&endtime[a-1]<=endtime[prio[i]-1])&&prio[i]!=a){
+                    System.out.println("yahoo");
+                     maxrep.add(prio[i]);//the main character lunch time is within other student lunch time 
+                     break;
+                }
+                else if(maxrep.isEmpty()&&
+              ((starttime[prio[i]-1]>=starttime[a-1]&&starttime[prio[i]-1]<=endtime[a-1])//the start time is withinn main character lunch time
+                     ||
+              (endtime[prio[i]-1]>=starttime[a-1]&&endtime[prio[i]-1]<=endtime[a-1])//the end time is within main character lunch time
+                     ||
+             ((starttime[prio[i]-1]>=starttime[a-1]&&starttime[prio[i]-1]<=endtime[a-1])
+                     &&                    //both start time and end time is within the main character lunch time
+              (endtime[prio[i]-1]>=starttime[a-1]&&endtime[prio[i]-1]<=endtime[a-1])))
+               &&prio[i]!=a){
+               
+               maxrep.add(prio[i]);
+               
+               
+           }
+               
+               
+               
+           else if(prio[i]!=a&&
+             ((starttime[prio[i]-1]>=starttime[a-1]&&starttime[prio[i]-1]<=endtime[a-1])//the start time is withinn main character lunch time
+                     ||
+              (endtime[prio[i]-1]>=starttime[a-1]&&endtime[prio[i]-1]<=endtime[a-1])//the end time is within main character lunch time
+                     ||
+             ((starttime[prio[i]-1]>=starttime[a-1]&&starttime[prio[i]-1]<=endtime[a-1])
+                     &&                    //both start time and end time is within the main character lunch time
+              (endtime[prio[i]-1]>=starttime[a-1]&&endtime[prio[i]-1]<=endtime[a-1])))
+                   &&!maxrep.isEmpty()
+                   ){
+                 System.out.println("The student who pass is:"+prio[i]);
+               int index = 0;
+               for (int j = 0; j < maxrep.size(); j++) {
+                   if((starttime[prio[i]-1]>=endtime[maxrep.get(j)-1])||
+                        (endtime[prio[i]-1]<=starttime[maxrep.get(j)-1])   
+                          )
+                   {
+
+                       index++;
+                   }
+                   else{
+                       
+                      continue;
+                       
+                   }
+                   
+               }
+               if(index==maxrep.size())
+                   maxrep.add(prio[i]);
+               else 
+                   continue;
+           }
+           else continue;
+       }
+    }
+
+    public static void AddMaxRepPerDay(ArrayList<Integer>maxrep,int num,WeightedGraph<Integer,Integer>graph1){
+            
+        for (int i = 0; i < maxrep.size(); i++) {
+        if(graph1.hasEdge(maxrep.get(i), num)){
+          int hold = graph1.getEdgeWeight(maxrep.get(i), num);
+            System.out.println("huhuh");
+            graph1.removeEdge(maxrep.get(i), num);
+            graph1.addEdge(maxrep.get(i), num, hold+1);
+        }
+       else
+             graph1.addEdge(maxrep.get(i), num, 1);
+          
+      }
+      for (int i = 0; i < maxrep.size(); i++) {
+        if(graph1.hasEdge(num, maxrep.get(i) )){
+          int hold = graph1.getEdgeWeight(num, maxrep.get(i));
+            System.out.println("huhuh");
+            graph1.removeEdge(num, maxrep.get(i));
+            graph1.addEdge(num, maxrep.get(i), hold+1);
+        }
+       else
+             graph1.addEdge(num, maxrep.get(i), 1);
+          
+      }
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
