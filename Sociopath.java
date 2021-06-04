@@ -1,3 +1,8 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
+
 public class Sociopath {
     public static void main(String[] args) {
         
@@ -90,9 +95,9 @@ public class Sociopath {
                 int getrep1 = 0;
                 boolean check = graph1.hasEdge(c, a);
                 if (check == true){
-                    getrep1 = (int) (graph1.getEdgeRep(c, a));   
+                    getrep1 = (int) (graph1.getEdgeWeight(c, a));   
                 }
-                int getrep = (int) (graph1.getEdgeRep(b, a)*0.5);
+                int getrep = (int) (graph1.getEdgeWeight(b, a)*0.5);
                 getrep = getrep1+getrep;
                 System.out.println("Person "+b+" chit-chat with Person "+c+" good things about you. ("+ graph1.addEdge(c, a, getrep)+")\n");
             }
@@ -106,16 +111,16 @@ public class Sociopath {
                 int getrep1 = 0;
                 boolean check = graph1.hasEdge(c, a);
                 if (check == true){
-                    getrep1 = (int) (graph1.getEdgeRep(c, a));   
+                    getrep1 = (int) (graph1.getEdgeWeight(c, a));   
                 }
-                int getrep = (int) (graph1.getEdgeRep(b, a));
+                int getrep = (int) (graph1.getEdgeWeight(b, a));
                 getrep = getrep1-getrep;
                 System.out.println("Person "+b+" chit-chat with Person "+c+" bad things about you. ("+ graph1.addEdge(c, a, getrep)+")\n");
             }
         
 
         System.out.println("Person "+b+" chit-chat with Person "+c+" about you.\n");
-        System.out.println("From Person " +c+ " point of view, Person "+a+" having "+graph1.getEdgeRep(c, a)+" rep points.\n ");
+        System.out.println("From Person " +c+ " point of view, Person "+a+" having "+graph1.getEdgeWeight(c, a)+" rep points.\n ");
 
     }
     
