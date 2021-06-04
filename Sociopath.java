@@ -81,7 +81,7 @@ public class Sociopath {
         c = friendB.get(c);
         //System.out.println("Person "+b+" chit-chat with Person "+c+" about you.\n");
         
-        boolean temp = graph1.addEdge(b, a, 10); //event1 =you good at programming
+       // boolean temp = graph1.addEdge(b, a, 10); //event1 =you good at programming
         //Event 1
         int learn = random.nextInt(2);
 
@@ -90,7 +90,7 @@ public class Sociopath {
             
                 System.out.println("Person "+b+" having fun learning with you.");
                 System.out.println("Person "+b+" become friend with you.");
-                temp = graph1.addEdge(b, a, 10); 
+                graph1.addEdge(b, a, 10); 
 
                 int getrep1 = 0;
                 boolean check = graph1.hasEdge(c, a);
@@ -99,14 +99,24 @@ public class Sociopath {
                 }
                 int getrep = (int) (graph1.getEdgeWeight(b, a)*0.5);
                 getrep = getrep1+getrep;
-                System.out.println("Person "+b+" chit-chat with Person "+c+" good things about you. ("+ graph1.addEdge(c, a, getrep)+")\n");
+                if(check){//to prevent redundant node
+                    graph1.removeEdge(c, a);
+                  
+                System.out.println("Person "+b+" chit-chat with Person "+c+
+                    " good things about you. ("+ graph1.addEdge(c, a, getrep)+")\n");
+                }
+                else{
+                     System.out.println("Person "+b+" chit-chat with Person "+c+
+                    " good things about you. ("+ graph1.addEdge(c, a, getrep)+")\n");
+                    
+                }
             }
 
             else if (learn == 1) { //bad at programming
 
                 System.out.println("You guys have an unpleasant teaching-learning session.");
                 System.out.println("However, you guys still friends");
-                temp = graph1.addEdge(b, a, 10); 
+                graph1.addEdge(b, a, 10); 
 
                 int getrep1 = 0;
                 boolean check = graph1.hasEdge(c, a);
@@ -115,13 +125,22 @@ public class Sociopath {
                 }
                 int getrep = (int) (graph1.getEdgeWeight(b, a));
                 getrep = getrep1-getrep;
-                System.out.println("Person "+b+" chit-chat with Person "+c+" bad things about you. ("+ graph1.addEdge(c, a, getrep)+")\n");
+                if(check){//to ptevent redundant node
+                    graph1.removeEdge(c, a);
+                System.out.println("Person "+b+" chit-chat with Person "+c+
+                    " bad things about you. ("+ graph1.addEdge(c, a, getrep)+")\n");
+                }
+                else{
+                     System.out.println("Person "+b+" chit-chat with Person "+c+
+                    " bad things about you. ("+ graph1.addEdge(c, a, getrep)+")\n");
+                    
+                }
             }
         
 
         System.out.println("Person "+b+" chit-chat with Person "+c+" about you.\n");
         System.out.println("From Person " +c+ " point of view, Person "+a+" having "+graph1.getEdgeWeight(c, a)+" rep points.\n ");
-
+        graph1.printEdges();
     }
     
     public void Event3(){
