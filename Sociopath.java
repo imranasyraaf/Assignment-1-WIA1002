@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Sociopath {
     public static Random random = new Random();
@@ -282,8 +283,73 @@ public class Sociopath {
 
     
     public void Event4(){
-        //code for event 4
+        Scanner a = new Scanner(System.in);
+        int numbook = a.nextInt();
+        a.nextLine();
+       String[] Book =new String[numbook];
+      
+       String buku = a.nextLine();
+       Book = buku.split(" ");
+    
+       
 
+        
+        
+       Stack<String> BookShelf = new Stack<>();
+        for (int i = Book.length-1; i >= 0; i--) {
+            BookShelf.push(Book[i]);
+        }
+        Stack<String> Hold = new Stack<>();
+        Stack<String> Table = new Stack<>();
+        Stack<String> copybook = new Stack<>();
+        int round=0;
+        
+        while(true){
+            int length = BookShelf.size();
+            
+          while(!BookShelf.isEmpty()){
+             if(Hold.isEmpty()){//if empty hand
+                 Hold.push(BookShelf.pop());
+             }
+             else if(Integer.parseInt(Hold.peek())>Integer.parseInt(BookShelf.peek())){//if book on hand is higher than book on the right in bookshelf
+                 Hold.push(BookShelf.pop());
+             }
+             else{
+                 Table.push(BookShelf.pop());//if bookk on hand lower height than book on right in bookshelf, put the book from bookshelf on the table
+                 if(!BookShelf.isEmpty()){
+                     while(Integer.parseInt(Table.peek())<Integer.parseInt(BookShelf.peek())){//if book on table is lower height than book on right in bookshelf, keep putting the book from bookshelf on the table
+                         
+                         Table.push(BookShelf.pop());
+                         if(BookShelf.isEmpty())
+                             break;
+                        
+                     }
+                    
+                     if(!BookShelf.isEmpty())
+                     Hold.push(BookShelf.pop());
+                 }
+             }
+              
+              
+              
+              
+          }
+          copybook=(Stack)Hold.clone();
+          int temp = Hold.size();
+           while(!Hold.isEmpty()){
+           
+               BookShelf.push(Hold.pop());
+           }
+          if(temp==length)//check if number of book in bookshelf is still the same
+              break;
+            System.out.println(copybook.toString());
+          round++;
+              
+        }
+        System.out.println("Round needed is "+round);
+        
+        
+        
     }
     
     public void Event5(){
