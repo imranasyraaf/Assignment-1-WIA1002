@@ -40,6 +40,7 @@ public class Sociopath {
         graph1.printEdges();
         
         Event1and2(graph1);
+        Event3(graph1);
         Event6();
     }
     
@@ -145,7 +146,7 @@ public class Sociopath {
         graph1.printEdges();
     }
     
-    public void Event3(WeightedGraph<Integer, Integer> graph1){
+    public static void Event3(WeightedGraph<Integer, Integer> graph1){
         Scanner scan = new Scanner(System.in);
         String [] day={"Monday","Tuesday","Wednesday","Thursday","Friday"};
       
@@ -267,7 +268,7 @@ public class Sociopath {
       graph1.printEdges();
          System.out.println("------------");
        CheckReputation(vertex,graph1);
-
+        System.out.println("-------------");
 
 
 
