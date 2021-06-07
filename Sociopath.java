@@ -388,14 +388,31 @@ public class Sociopath {
                 
      
         boolean spread = graph1.hasEdge(d, b); // check if crush friend with strangers
-        boolean spread1 = graph1.hasEdge(d, c); // check if crush friend with chitchat
-        if (spread == true){
+        boolean spread1 = false;
+        
+        if (d != c)//check id d and c is same person or not
+            spread1 = graph1.hasEdge(d, c);// check if crush friend with chitchat
+        
+        if (spread == true && spread1 == true){//crush friends with b and c
             System.out.println("There is someone who knows you that are friends"
-                    + " with your crush: Person "+b); 
+                    + " with your crush: Person "+b+ " and " +c);
+            System.out.println("You guys meet up");
+            System.out.println("Person "+b+ " and " +c+ " promise not to tell "
+                    +d+ " that you have crush on him/her"); 
         }
-        if (spread1 == true){
+        else if (spread == true){//crush friend with b
+            System.out.println("There is someone who knows you that are friends"
+                    + " with your crush: Person "+b);
+            System.out.println("You guys meet up");
+            System.out.println("Person "+b+ " promise not to tell "
+                    +d+ " that you have crush on him/her"); 
+        }
+        else if (spread1 == true){//crush friend with c
             System.out.println("There is someone who knows you that are friends"
                     + " with your crush: Person "+c);
+            System.out.println("You guys meet up");
+            System.out.println("Person " +c+ " promise not to tell "
+                    +d+ " that you have crush on him/her"); 
         }
         else
             System.out.println("Your crush will not know you like her/his");
