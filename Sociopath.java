@@ -40,19 +40,37 @@ public class Sociopath {
         System.out.println("Print Edges: ");
         graph1.printEdges();
         
-        Event1and2(graph1);
-        Event3(graph1);
-        Event6();
+        Scanner scan = new Scanner(System.in);
+        try{
+            System.out.print("Enter the event number(or type 'quit' to exit): ");
+            String event = scan.nextLine();
+            while(!event.equals("quit")){
+                if(event.equals("1") || event.equals("2")){
+                    Event1and2(graph1);
+                }else if(event.equals("3")){
+                    Event3(graph1);
+                }else if(event.equals("4")){
+                    Event4();
+                }else if(event.equals("5")){
+                    System.out.println("?");
+                }else if(event.equals("6")){
+                    Event6();
+                }
+                System.out.print("Enter the event number(or type 'quit' to exit): ");
+                event = scan.nextLine();
+            }
+
+        }catch(InputMismatchException e){
+            System.out.println("Invalid input.");
+        }
     }
     
-    public void Event1(){
-        //code for event 1
-    }
+
     
     //Event 2 -----------------------------------------------------------------------------------------------
     public static void Event1and2(WeightedGraph<Integer, Integer> graph1){
         //code for event 2
-        System.out.println("This is Event 2: \n");
+        System.out.println("This is Event 1 and 2: \n");
         // Random random = new Random();
         int a = random.nextInt(11); //decide you (a)
         while(a==0){
@@ -148,6 +166,7 @@ public class Sociopath {
     }
     
     public static void Event3(WeightedGraph<Integer, Integer> graph1){
+        System.out.println("Event 3----------------------------------------");
         Scanner scan = new Scanner(System.in);
         String [] day={"Monday","Tuesday","Wednesday","Thursday","Friday"};
       
@@ -283,18 +302,16 @@ public class Sociopath {
 
     
     public void Event4(){
+        System.out.println("Event 4----------------------------------------");
         Scanner a = new Scanner(System.in);
+        System.out.print("Enter number of book: ");
         int numbook = a.nextInt();
         a.nextLine();
-       String[] Book =new String[numbook];
-      
-       String buku = a.nextLine();
-       Book = buku.split(" ");
+        String[] Book =new String[numbook];
+        System.out.println("Enter the books separated by spaces: ");
+        String buku = a.nextLine();
+        Book = buku.split(" ");
     
-       
-
-        
-        
        Stack<String> BookShelf = new Stack<>();
         for (int i = Book.length-1; i >= 0; i--) {
             BookShelf.push(Book[i]);
@@ -427,6 +444,7 @@ public class Sociopath {
     }
 
     public static void Event6() {
+        System.out.println("Event 6----------------------------------------");
         UnweightedGraph<Integer, Integer> graph6 = new UnweightedGraph<>();
         graph6.addVertex(0);
         Scanner scan = new Scanner(System.in);
@@ -688,66 +706,5 @@ public class Sociopath {
       
     }
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
