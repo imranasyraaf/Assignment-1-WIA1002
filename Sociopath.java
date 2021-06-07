@@ -65,10 +65,10 @@ public class Sociopath {
         ArrayList<Integer> b1 = new ArrayList<>();// list all edge except a
        
         for(int i=1; i<=10; i++){
-            b1.add(i);
-            for(int x=0; x<b2.size(); x++){
+            b1.add(i); // add edge in list
+            for(int x=0; x<b2.size(); x++){ //check edge if it in b2 list
                 if (i == b2.get(x)) {
-                    b1.remove(b1.size()-1);
+                    b1.remove(b1.size()-1); //the edge is remove since it has in b2 list
                     break;
                 }
             }
@@ -80,12 +80,8 @@ public class Sociopath {
         System.out.println("You will teach Person "+b+".\n");
         
         ArrayList<Integer> friendB = graph1.getNeighbours(b); //choose who chit chat with b (c)
-        int cSize = friendB.size();
-        int c = random.nextInt(cSize);
-        c = friendB.get(c);
-        //System.out.println("Person "+b+" chit-chat with Person "+c+" about you.\n");
+        c = friendB.get(random.nextInt(friendB.size())); //choose c
         
-       // boolean temp = graph1.addEdge(b, a, 10); //event1 =you good at programming
         //Event 1
         int learn = random.nextInt(2);
 
@@ -94,18 +90,18 @@ public class Sociopath {
             
                 System.out.println("Person "+b+" having fun learning with you.");
                 System.out.println("Person "+b+" become friend with you.");
-                graph1.addEdge(b, a, 10); 
+                graph1.addEdge(b, a, 10); //you guys get 1o points
 
-                int getrep1 = 0;
-                boolean check = graph1.hasEdge(c, a);
+                int getrep1 = 0; //intialize rep between c and you
+                boolean check = graph1.hasEdge(c, a); // to know if c frieds with you or not
                 if (check == true){
-                    getrep1 = (int) (graph1.getEdgeWeight(c, a));   
+                    getrep1 = (int) (graph1.getEdgeWeight(c, a)); // we use current rep point if you're friends
                 }
-                int getrep = (int) (graph1.getEdgeWeight(b, a)*0.5);
-                getrep = getrep1+getrep;
+                int getrep = (int) (graph1.getEdgeWeight(b, a)*0.5); // 50% of A rep points to b
+                getrep = getrep1+getrep; // new rep point of a rep points to c (add)
+                
                 if(check){//to prevent redundant node
                     graph1.removeEdge(c, a);
-                  
                 System.out.println("Person "+b+" chit-chat with Person "+c+
                     " good things about you. ("+ graph1.addEdge(c, a, getrep)+")\n");
                 }
@@ -120,18 +116,19 @@ public class Sociopath {
 
                 System.out.println("You guys have an unpleasant teaching-learning session.");
                 System.out.println("However, you guys still friends");
-                graph1.addEdge(b, a, 10); 
+                graph1.addEdge(b, a, 2); //you guys get 2 point
 
-                int getrep1 = 0;
-                boolean check = graph1.hasEdge(c, a);
+                int getrep1 = 0; //intialize rep between c and you
+                boolean check = graph1.hasEdge(c, a); // to know if c frieds with you or not
                 if (check == true){
-                    getrep1 = (int) (graph1.getEdgeWeight(c, a));   
+                    getrep1 = (int) (graph1.getEdgeWeight(c, a)); // we use current rep point if you're friends  
                 }
-                int getrep = (int) (graph1.getEdgeWeight(b, a));
-                getrep = getrep1-getrep;
+                int getrep = (int) (graph1.getEdgeWeight(b, a)); // 100% of A rep points to b
+                getrep = getrep1-getrep;  // new rep point of a rep points to c (minus)
+                
                 if(check){//to ptevent redundant node
                     graph1.removeEdge(c, a);
-                System.out.println("Person "+b+" chit-chat with Person "+c+
+                    System.out.println("Person "+b+" chit-chat with Person "+c+
                     " bad things about you. ("+ graph1.addEdge(c, a, getrep)+")\n");
                 }
                 else{
@@ -354,7 +351,54 @@ public class Sociopath {
     
     public void Event5(){
         //code for event 5
-
+        System.out.println();
+        System.out.println("You have join one volunteering program");
+        System.out.println("When you doing your work, you bump into someone\n");
+        
+        ArrayList<Integer> d2 = graph1.getNeighbours(a); //list all you friends
+        d2.add(a);
+        d2.add(b);
+        ArrayList<Integer> d1 = new ArrayList<>();// list all edge except a
+       
+        for(int i=1; i<=10; i++){
+            d1.add(i);
+            for(int x=0; x<d2.size(); x++){ //check if d1 has in d2
+                if (i == d2.get(x)) { 
+                    d1.remove(d1.size()-1); //remove d1 since it has in d2 
+                    break; // continue to add next edge
+                }
+            }
+        }
+        
+        int d = d1.get(random.nextInt(d1.size())); // choose the crush
+        System.out.println("You bump to "+d+".\n");
+        
+        ArrayList<Integer> a5 = graph1.getNeighbours(a);
+        System.out.print(a+ " : ");
+        System.out.println(a5); //print all you friends
+        ArrayList<Integer> b5 = graph1.getNeighbours(b);
+        System.out.print(b+ " : ");
+        System.out.println(b5); // print all strangers friends
+        ArrayList<Integer> c5 = graph1.getNeighbours(c);
+        System.out.print(c+ " : ");
+        System.out.println(c5); // print all chitchat friends
+        ArrayList<Integer> d5 = graph1.getNeighbours(d);
+        System.out.print(d+ " : ");
+        System.out.println(d5);// print all crush friends
+                
+     
+        boolean spread = graph1.hasEdge(d, b); // check if crush friend with strangers
+        boolean spread1 = graph1.hasEdge(d, c); // check if crush friend with chitchat
+        if (spread == true){
+            System.out.println("There is someone who knows you that are friends"
+                    + " with your crush: Person "+b); 
+        }
+        if (spread1 == true){
+            System.out.println("There is someone who knows you that are friends"
+                    + " with your crush: Person "+c);
+        }
+        else
+            System.out.println("Your crush will not know you like her/his");
     }
     
     
