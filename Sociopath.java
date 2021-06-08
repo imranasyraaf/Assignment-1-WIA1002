@@ -384,7 +384,8 @@ public class Sociopath {
     }
     //end of event 5 --------------------------------------------------------------------------
     
-    //code for event 5
+    public void Event5(){
+        //code for event 5
         System.out.println();
         System.out.println("You have join one volunteering program");
         System.out.println("When you doing your work, you bump into someone\n");
@@ -450,8 +451,6 @@ public class Sociopath {
         }
         else // crush not friend with anybody
             System.out.println("Your crush will not know you like her/his");
-    }
-
     }
     
     
