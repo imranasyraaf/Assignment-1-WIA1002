@@ -583,7 +583,8 @@ public class Sociopath {
             System.out.println(index +". "+Arrays.toString(x));
             index++;
         }
-
+        
+        sequence.clear();   //clear back the sequence arraylist for next input
     }
     //end of event 6 -------------------------------------------------------------------
 
