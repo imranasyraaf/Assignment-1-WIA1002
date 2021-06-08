@@ -382,10 +382,75 @@ public class Sociopath {
         
         
     }
-    //end of event 4 --------------------------------------------------------------------------
+    //end of event 5 --------------------------------------------------------------------------
     
-    public void Event5(){
-        //code for event 5
+    //code for event 5
+        System.out.println();
+        System.out.println("You have join one volunteering program");
+        System.out.println("When you doing your work, you bump into someone\n");
+        
+        ArrayList<Integer> d2 = graph1.getNeighbours(a); //list all you friends
+        d2.add(a); // add you in the list
+        d2.add(b); // add strangers in the list
+        ArrayList<Integer> d1 = new ArrayList<>();// list all edge except you and strangers
+       
+        for(int i=1; i<=10; i++){
+            d1.add(i);
+            for(int x=0; x<d2.size(); x++){ //check if d1 has in d2
+                if (i == d2.get(x)) { 
+                    d1.remove(d1.size()-1); //remove d1 since it has in d2 
+                    break; // continue to add next edge
+                }
+            }
+        }
+        
+        int d = d1.get(random.nextInt(d1.size())); // choose the crush
+        System.out.println("You bump to "+d+".\n");
+        
+        ArrayList<Integer> a5 = graph1.getNeighbours(a);
+        System.out.print(a+ " : ");
+        System.out.println(a5); //print all you friends
+        ArrayList<Integer> b5 = graph1.getNeighbours(b);
+        System.out.print(b+ " : ");
+        System.out.println(b5); // print all strangers friends
+        ArrayList<Integer> c5 = graph1.getNeighbours(c);
+        System.out.print(c+ " : ");
+        System.out.println(c5); // print all chitchat friends
+        ArrayList<Integer> d5 = graph1.getNeighbours(d);
+        System.out.print(d+ " : ");
+        System.out.println(d5);// print all crush friends
+                
+     
+        boolean spread = graph1.hasEdge(d, b); // check if crush friend with strangers
+        boolean spread1 = false;
+        
+        if (d != c)//check id d and c is same person or not
+            spread1 = graph1.hasEdge(d, c);// check if crush friend with chitchat
+        
+        if (spread == true && spread1 == true){//crush friends with b and c
+            System.out.println("There is someone who knows you that are friends"
+                    + " with your crush: Person "+b+ " and " +c);
+            System.out.println("You guys meet up");
+            System.out.println("Person "+b+ " and " +c+ " promise not to tell "
+                    +d+ " that you have crush on him/her"); 
+        }
+        else if (spread == true){//crush friend with b only
+            System.out.println("There is someone who knows you that are friends"
+                    + " with your crush: Person "+b);
+            System.out.println("You guys meet up");
+            System.out.println("Person "+b+ " promise not to tell "
+                    +d+ " that you have crush on him/her"); 
+        }
+        else if (spread1 == true){//crush friend with c only
+            System.out.println("There is someone who knows you that are friends"
+                    + " with your crush: Person "+c);
+            System.out.println("You guys meet up");
+            System.out.println("Person " +c+ " promise not to tell "
+                    +d+ " that you have crush on him/her"); 
+        }
+        else // crush not friend with anybody
+            System.out.println("Your crush will not know you like her/his");
+    }
 
     }
     
