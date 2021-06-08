@@ -40,8 +40,15 @@ public class Sociopath {
         System.out.println("Print Edges: ");
         graph1.printEdges();
         
+        int [] vertex = {1,2,3,4,5,6,7,8,9,10}; //for check rep and check hate
+        WeightedGraph<Integer, Integer> graphEnemy = initEnemyGraph();  //initialize enemy graph
+
         Scanner scan = new Scanner(System.in);
         try{
+            System.out.println("\nList of events:");
+            System.out.println("Event 1 = '1'\nEvent 2 = '2'\nEvent 3 = '3'\n" +
+                    "Event 4 = '4'\nEvent 5 = '5'\nEvent 6 = '6'\nFrenemies = '7'\n" +
+                    "Check Reputation = '9'\nCheck Hate ='0'\n");
             System.out.print("Enter the event number(or type 'quit' to exit): ");
             String event = scan.nextLine();
             while(!event.equals("quit")){
@@ -55,7 +62,20 @@ public class Sociopath {
                     System.out.println("?");
                 }else if(event.equals("6")){
                     Event6();
+                }else if(event.equals("7")){
+                    frenemies(graph1, graphEnemy);
+                }else if(event.equals("9")){
+                    CheckReputation(vertex,graph1);
+                }else if(event.equals("0")){
+                    checkHate(vertex,graphEnemy);
                 }
+                else{
+                    System.out.println("Invalid event number.");
+                }
+                System.out.println("\nList of events:");
+                System.out.println("Event 1 = '1'\nEvent 2 = '2'\nEvent 3 = '3'\n" +
+                        "Event 4 = '4'\nEvent 5 = '5'\nEvent 6 = '6'\nFrenemies = '7'\n" +
+                        "Check Reputation = '9'\nCheck Hate ='0'\n");
                 System.out.print("Enter the event number(or type 'quit' to exit): ");
                 event = scan.nextLine();
             }
@@ -164,6 +184,7 @@ public class Sociopath {
         System.out.println("From Person " +c+ " point of view, Person "+a+" having "+graph1.getEdgeWeight(c, a)+" rep points.\n ");
         graph1.printEdges();
     }
+    //end of event 2 --------------------------------------------------------------------------------------------
     
     public static void Event3(WeightedGraph<Integer, Integer> graph1){
         System.out.println("Event 3----------------------------------------");
@@ -290,17 +311,11 @@ public class Sociopath {
        CheckReputation(vertex,graph1);
         System.out.println("-------------");
 
-
-
-
-
-
-       
-            
+   
         }
         
 
-    
+    //event 4 -------------------------------------------------------------------------------
     public void Event4(){
         System.out.println("Event 4----------------------------------------");
         Scanner a = new Scanner(System.in);
@@ -366,8 +381,8 @@ public class Sociopath {
         System.out.println("Round needed is "+round);
         
         
-        
     }
+    //end of event 4 --------------------------------------------------------------------------
     
     public void Event5(){
         //code for event 5
@@ -505,14 +520,7 @@ public class Sociopath {
         }
 
     }
-
-
-
-
-
-
-
-
+    //end of event 6 -------------------------------------------------------------------
 
 
     public static int changetime(int start,int min){
@@ -706,5 +714,92 @@ public class Sociopath {
       
     }
     
+    //Extra feature 1 : social dynamics - Frenemies----------------------------------------------------------
+    public static WeightedGraph<Integer, Integer> initEnemyGraph(){
+        WeightedGraph<Integer, Integer> graphEnemy = new WeightedGraph<>();
+        //add vertex for all 10 students
+        for (int i = 1; i < 11; i++){
+            graphEnemy.addVertex(i);
+        }
+
+        return graphEnemy;
+    }
+    public static void frenemies(WeightedGraph<Integer, Integer> graph1, WeightedGraph<Integer, Integer> graphEnemy){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Frenemies---------------------------------");
+        System.out.println("Do you want to:");
+        System.out.println("Establish an enemy edge between 2 students (1)\n" +
+                "Move on from enemy relationship between 2 students (2)\n" +
+                "Check Frenemies Statuses (3)\n" );
+        System.out.print("Your option (1/2/3): ");
+        String options = scan.nextLine();
+        if(options.equals("1")){
+            System.out.print("Enter the student number: ");
+            int source = scan.nextInt();
+            System.out.print("Enter his/her enemy: ");
+            int dest = scan.nextInt();
+            System.out.print("Enter the weight of hate of the student: ");
+            int weight = scan.nextInt();
+            boolean temp = graphEnemy.addEdge(source, dest, weight);
+            System.out.println("Student " + source +" is now having enemy relationship with Student " + dest);
+
+            System.out.println("[Enemy Edges]");
+            graphEnemy.printEdges();
+
+        }else if(options.equals("2")){
+            System.out.print("Enter the student number: ");
+            int source = scan.nextInt();
+            System.out.print("Enter his/her enemy: ");
+            int dest = scan.nextInt();
+            graphEnemy.removeEdge(source,dest);
+            System.out.println("Student " + source +" has move on from enemy relationship with Student " + dest);
+            graphEnemy.printEdges();
+
+        }else if(options.equals("3")){
+            System.out.println("[Friends Edge]");
+            graph1.printEdges();
+            System.out.println("\n[Enemies Edge]");
+            graphEnemy.printEdges();
+            ArrayList<Integer> enemy = new ArrayList<>();
+            ArrayList<Integer> friend = new ArrayList<>();
+
+            boolean hasFrenemy = false;
+
+            for(int i = 1; i <=10 ;i++){
+                enemy = graphEnemy.getNeighbours(i);
+                friend = graph1.getNeighbours(i);
+                for(int j = 0; j < enemy.size(); j++){
+                    for(int k = 0; k < friend.size(); k++){
+                        if(enemy.get(j).equals(friend.get(k))){
+                            System.out.println("Student " + i + " is frenemies with Student " + enemy.get(j));
+                            hasFrenemy = true;
+                        }
+                    }
+
+                }
+            }
+            if(!hasFrenemy){
+                System.out.println("No frenemies relationship founded yet.");
+            }
+        }else{
+            System.out.println("Invalid options.");
+        }
+    }
+    public static void checkHate(int[]vertex,WeightedGraph<Integer,Integer> graph){
+        ArrayList<Integer> temp = new ArrayList<>();
+        System.out.println("List of Hate Rate:");
+        for (int i = 0; i < vertex.length; i++) {
+            temp = graph.getNeighbours(vertex[i]);
+            if(temp.size()!=0){
+                System.out.println("Student "+vertex[i]);
+                for (int j = 0; j < temp.size(); j++) {
+                    System.out.print("[Student "+temp.get(j)+", Hate:"+graph.getEdgeWeight(vertex[i], temp.get(j))+"]");
+                }
+                System.out.println("");
+
+            }
+        }
+    }
+    // end of extra features 1 ------------------------------------------------------------------
 
 }
