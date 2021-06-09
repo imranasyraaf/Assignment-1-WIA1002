@@ -200,6 +200,9 @@ public class Sociopath {
       int[] Period = new int[10];     
       int[]Start = new int[10];
 
+      for (int i = 0; i < dive.length; i++) {//initialize dive rate
+        dive[i]=random.nextInt(101);
+    }
 
         System.out.println("---------------");
 
@@ -234,6 +237,12 @@ public class Sociopath {
             Start[i]=Start[i]/5;
            Start[i]= changetime(Start[i],0);
         }
+
+         //dive rate each student
+         System.out.println("-----------------------");
+         for (int i = 0; i < dive.length; i++) {
+               System.out.println("Student "+(i+1)+":"+dive[i]+"%");
+         }
         
         System.out.println("-----------------------");
         System.out.println("Average start time for each student:");//For initialize lunch period
@@ -254,6 +263,7 @@ public class Sociopath {
         for (int i = 0; i < Start.length; i++) {//initialize start time and lunch period
             graph1.AddStart(vertex[i], Start[i]);
             graph1.AddLunch(vertex[i], Period[i]);
+            graph1.AddDive(vertex[i], dive[i]);
         }
 
         System.out.println("------------");
@@ -264,18 +274,19 @@ public class Sociopath {
 
            int a = 1;//initailiazie main character
 
-           int[]checkrelia =relia(vertex,graph1); //Find reliability of each student by finding its average rep among his friend
-           System.out.println("----------------");
-           System.out.println("List of reliability:");
-         for (int i = 0; i < 10; i++) {//Get reliability of each student by getting their average rep among their friends
+        //    int[]checkrelia =relia(vertex,graph1); //Find reliability of each student by finding its average rep among his friend
+        //    System.out.println("----------------");
+        //    System.out.println("List of reliability:");
+        //  for (int i = 0; i < 10; i++) {//Get reliability of each student by getting their average rep among their friends
      
-            System.out.println("Reliability student "+vertex[i]+" is "+checkrelia[i]);
-         }//sort the array astu
+        //     System.out.println("Reliability student "+vertex[i]+" is "+checkrelia[i]);
+        //  }//sort the array astu
+
              System.out.println("-----------------");
-             int[] prio =priorityReliability(checkrelia,vertex);//Arrange student with highest reliability at top
+             int[] prio =priorityReliability(dive,vertex);//Arrange student with highest reliability at top
 
              System.out.println("Priority list according to reliability");
-         	for (int i = prio.length-1; i >=0 ; i--) {//sort the student according to reliability ascending
+         	for (int i = 0; i <prio.length ; i++) {//sort the student according to reliability ascending
                     System.out.println("Student: "+prio[i]);
         }
             
@@ -632,36 +643,36 @@ public class Sociopath {
         }
     }
 
-    public static int[] relia (int[] vertex,WeightedGraph<Integer,Integer> graph){//method find reliability
+    // public static int[] relia (int[] vertex,WeightedGraph<Integer,Integer> graph){//method find reliability
           
          
-        int[] listofreli = new int[10];
-        int[] numberofedges = new int[10];
+    //     int[] listofreli = new int[10];
+    //     int[] numberofedges = new int[10];
         
        
-          for (int i = 0; i < 10; i++) {
-              ArrayList<Integer> temp = graph.getNeighbours(vertex[i]);
-            for (int j = 0; j < temp.size(); j++) {
+    //       for (int i = 0; i < 10; i++) {
+    //           ArrayList<Integer> temp = graph.getNeighbours(vertex[i]);
+    //         for (int j = 0; j < temp.size(); j++) {
              
-                  listofreli[i]+=graph.getEdgeWeight(vertex[i], temp.get(j));
-                    numberofedges[i]+=1;
+    //               listofreli[i]+=graph.getEdgeWeight(vertex[i], temp.get(j));
+    //                 numberofedges[i]+=1;
                 
                     
                     
-            }
+    //         }
             
-        }
-          int[] reliability = new int[10];
-          for (int i = 0; i < 10; i++) {
-              reliability[i] = listofreli[i]/numberofedges[i];
+    //     }
+    //       int[] reliability = new int[10];
+    //       for (int i = 0; i < 10; i++) {
+    //           reliability[i] = listofreli[i]/numberofedges[i];
              
-        }
+    //     }
 
 
 
 
-        return reliability; 
-        }   
+    //     return reliability; 
+    //     }   
         
         public static int[] priorityReliability (int[] checkrelia,int[]vertex){//method find reliability
           
@@ -711,7 +722,7 @@ public class Sociopath {
 
           public static void FindMaxReputation(int a,int[]prio,int[]starttime,int[]endtime,ArrayList<Integer>maxrep){
           
-            for (int i = prio.length-1; i >=0 ; i--) {
+            for (int i = 0; i <prio.length ; i++) {
                 if(maxrep.isEmpty()&&(starttime[a-1]>=starttime[prio[i]-1]&&endtime[a-1]<=endtime[prio[i]-1])&&prio[i]!=a){
                     System.out.println("yahoo");
                      maxrep.add(prio[i]);//the main character lunch time is within other student lunch time 
