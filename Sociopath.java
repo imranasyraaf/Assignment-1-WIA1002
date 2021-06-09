@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Stack;
@@ -39,7 +40,7 @@ public class Sociopath {
 
         System.out.println("Print Edges: ");
         graph1.printEdges();
-        
+        int[]variableABC= new int[3];
         int [] vertex = {1,2,3,4,5,6,7,8,9,10}; //for check rep and check hate
         WeightedGraph<Integer, Integer> graphEnemy = initEnemyGraph();  //initialize enemy graph
 
@@ -53,13 +54,13 @@ public class Sociopath {
             String event = scan.nextLine();
             while(!event.equals("quit")){
                 if(event.equals("1") || event.equals("2")){
-                    Event1and2(graph1);
+                    Event1and2(graph1,variableABC);
                 }else if(event.equals("3")){
                     Event3(graph1);
                 }else if(event.equals("4")){
                     Event4();
                 }else if(event.equals("5")){
-                    System.out.println("?");
+                    Event5(graph1, variableABC);;
                 }else if(event.equals("6")){
                     Event6();
                 }else if(event.equals("7")){
@@ -88,7 +89,7 @@ public class Sociopath {
 
     
     //Event 2 -----------------------------------------------------------------------------------------------
-    public static void Event1and2(WeightedGraph<Integer, Integer> graph1){
+    public static void Event1and2(WeightedGraph<Integer, Integer> graph1,int[] variableABC){
         //code for event 2
         System.out.println("This is Event 1 and 2: \n");
         // Random random = new Random();
@@ -183,6 +184,9 @@ public class Sociopath {
         System.out.println("Person "+b+" chit-chat with Person "+c+" about you.\n");
         System.out.println("From Person " +c+ " point of view, Person "+a+" having "+graph1.getEdgeWeight(c, a)+" rep points.\n ");
         graph1.printEdges();
+            variableABC[0]=a;
+            variableABC[1]=b;
+            variableABC[2]=c;
     }
     //end of event 2 --------------------------------------------------------------------------------------------
     
@@ -316,7 +320,7 @@ public class Sociopath {
         
 
     //event 4 -------------------------------------------------------------------------------
-    public void Event4(){
+    public static void Event4(){
         System.out.println("Event 4----------------------------------------");
         Scanner a = new Scanner(System.in);
         System.out.print("Enter number of book: ");
@@ -384,8 +388,11 @@ public class Sociopath {
     }
     //end of event 5 --------------------------------------------------------------------------
     
-    public void Event5(){
+    public static void Event5(WeightedGraph<Integer, Integer> graph1,int[]variableABC){
         //code for event 5
+        int a = variableABC[0];
+        int b = variableABC[1];
+        int c = variableABC[2];
         System.out.println();
         System.out.println("You have join one volunteering program");
         System.out.println("When you doing your work, you bump into someone\n");
