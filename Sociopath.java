@@ -796,6 +796,28 @@ public class Sociopath {
       }
       
     }
+    public static void initializeStartandPeriod(int[]Start,int[]Period,String[]day){
+        System.out.println("Start time and time taken for lunch for every student:");
+     for (int i = 0; i < Period.length; i++) {
+         System.out.println("Student:"+(i+1));
+         for (int j = 0; j < day.length; j++) {
+         int temp2 =  random.nextInt(1355-1100)+1100;
+         int temp = random.nextInt(60-5)+5;
+           while((temp2%100)>=60){//start random
+             temp2=random.nextInt(1355-1100)+1100;
+         
+     }
+         while(changetime(temp2,temp)>1400){
+              temp = random.nextInt(60-5)+5;
+         }
+         Start[i]+=temp2;
+         Period[i]+=temp;
+             System.out.print(day[j]+":["+"Start:"+temp2+" "+"Minutes:"+temp+"]"+" ");
+        
+         }
+         System.out.println("");
+     }
+   }
     
     //Extra feature 1 : social dynamics - Frenemies----------------------------------------------------------
     public static WeightedGraph<Integer, Integer> initEnemyGraph(){
