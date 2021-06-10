@@ -346,7 +346,7 @@ public class Sociopath {
         for (int i = Book.length-1; i >= 0; i--) {
             BookShelf.push(Book[i]);
         }
-        Stack<String> Hold = new Stack<>();
+        Stack<String> leftSide = new Stack<>();
         Stack<String> Table = new Stack<>();
         Stack<String> copybook = new Stack<>();
         int round=0;
@@ -355,25 +355,25 @@ public class Sociopath {
             int length = BookShelf.size();
             
           while(!BookShelf.isEmpty()){
-             if(Hold.isEmpty()){//if empty hand
-                 Hold.push(BookShelf.pop());
+             if(leftSide.isEmpty()){//if left side of books shelf is empty
+                 leftSide.push(BookShelf.pop());
              }
-             else if(Integer.parseInt(Hold.peek())>Integer.parseInt(BookShelf.peek())){//if book on hand is higher than book on the right in bookshelf
-                 Hold.push(BookShelf.pop());
+             else if(Integer.parseInt(leftSide.peek())>Integer.parseInt(BookShelf.peek())){//if book on left side of bookshelf is higher than book on the right side 
+                 leftSide.push(BookShelf.pop());
              }
              else{
-                 Table.push(BookShelf.pop());//if bookk on hand lower height than book on right in bookshelf, put the book from bookshelf on the table
+                 Table.push(BookShelf.pop());//if book on left side has lower height than book on right in bookshelf, put the book on the right side of the bookshelf on the table
                  if(!BookShelf.isEmpty()){
                      while(Integer.parseInt(Table.peek())<Integer.parseInt(BookShelf.peek())){//if book on table is lower height than book on right in bookshelf, keep putting the book from bookshelf on the table
                          
                          Table.push(BookShelf.pop());
-                         if(BookShelf.isEmpty())
+                         if(BookShelf.isEmpty())//if book on right side is empty
                              break;
                         
                      }
                     
                      if(!BookShelf.isEmpty())
-                     Hold.push(BookShelf.pop());
+                     leftSide.push(BookShelf.pop());
                  }
              }
               
@@ -381,11 +381,11 @@ public class Sociopath {
               
               
           }
-          copybook=(Stack)Hold.clone();
-          int temp = Hold.size();
-           while(!Hold.isEmpty()){
+          copybook=(Stack)leftSide.clone();
+          int temp = leftSide.size();
+           while(!leftSide.isEmpty()){
            
-               BookShelf.push(Hold.pop());
+               BookShelf.push(leftSide.pop());//push all the book to the right side
            }
           if(temp==length)//check if number of book in bookshelf is still the same
               break;
