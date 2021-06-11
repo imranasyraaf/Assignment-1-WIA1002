@@ -10,7 +10,20 @@ public class Sociopath {
     public static void main(String[] args) {
         
         WeightedGraph<Integer, Integer> graph1 = new WeightedGraph<>();
-       
+        String [] day={"Monday","Tuesday","Wednesday","Thursday","Friday"};
+        int [] dive = new int[10];
+        int[] Period = new int[10];
+         int[]Start = new int[10];
+  
+        for (int i = 0; i < dive.length; i++) {//initialize dive rate
+              dive[i]=random.nextInt(101);
+          }
+
+          initializeStartandPeriod(Start,Period,day);
+
+
+
+
        
 
         //add vertex for all 10 students
@@ -56,7 +69,7 @@ public class Sociopath {
                 if(event.equals("1") || event.equals("2")){
                     Event1and2(graph1,variableABC);
                 }else if(event.equals("3")){
-                    Event3(graph1);
+                    Event3(graph1,Start,Period,dive);
                 }else if(event.equals("4")){
                     Event4();
                 }else if(event.equals("5")){
@@ -190,42 +203,42 @@ public class Sociopath {
     }
     //end of event 2 --------------------------------------------------------------------------------------------
     
-    public static void Event3(WeightedGraph<Integer, Integer> graph1){
+    public static void Event3(WeightedGraph<Integer, Integer> graph1,int[]Start,int[]Period,int[]dive){
         System.out.println("Event 3----------------------------------------");
         Scanner scan = new Scanner(System.in);
         String [] day={"Monday","Tuesday","Wednesday","Thursday","Friday"};
       
       int [] vertex = {1,2,3,4,5,6,7,8,9,10};
-      int [] dive = new int[10];
-      int[] Period = new int[10];     
-      int[]Start = new int[10];
+    //   int [] dive = new int[10];
+    //   int[] Period = new int[10];     
+    //   int[]Start = new int[10];
 
-      for (int i = 0; i < dive.length; i++) {//initialize dive rate
-        dive[i]=random.nextInt(101);
-    }
+    //   for (int i = 0; i < dive.length; i++) {//initialize dive rate
+    //     dive[i]=random.nextInt(101);
+    // }
 
         System.out.println("---------------");
 
-        System.out.println("Start time and time taken for lunch for every student:");
-        for (int i = 0; i < Period.length; i++) {
-            System.out.println("Student:"+(i+1));
-            for (int j = 0; j < day.length; j++) {
-            int temp2 =  random.nextInt(1355-1100)+1100;
-            int temp = random.nextInt(60-5)+5;
-              while((temp2%100)>=60){//start random
-                temp2=random.nextInt(1355-1100)+1100;
+        // System.out.println("Start time and time taken for lunch for every student:");
+        // for (int i = 0; i < Period.length; i++) {
+        //     System.out.println("Student:"+(i+1));
+        //     for (int j = 0; j < day.length; j++) {
+        //     int temp2 =  random.nextInt(1355-1100)+1100;
+        //     int temp = random.nextInt(60-5)+5;
+        //       while((temp2%100)>=60){//start random
+        //         temp2=random.nextInt(1355-1100)+1100;
             
-        }
-            while(changetime(temp2,temp)>1400){
-                 temp = random.nextInt(60-5)+5;
-            }
-            Start[i]+=temp2;
-            Period[i]+=temp;
-                System.out.print(day[j]+":["+"Start:"+temp2+" "+"Minutes:"+temp+"]"+" ");
+        // }
+        //     while(changetime(temp2,temp)>1400){
+        //          temp = random.nextInt(60-5)+5;
+        //     }
+        //     Start[i]+=temp2;
+        //     Period[i]+=temp;
+        //         System.out.print(day[j]+":["+"Start:"+temp2+" "+"Minutes:"+temp+"]"+" ");
            
-            }
-            System.out.println("");
-        }
+        //     }
+        //     System.out.println("");
+        // }
         
         //average time taken for lunch
         for (int i = 0; i < Period.length; i++) {
