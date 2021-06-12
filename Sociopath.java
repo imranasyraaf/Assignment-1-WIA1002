@@ -69,7 +69,7 @@ public class Sociopath {
                 if(event.equals("1") || event.equals("2")){
                     Event1and2(graph1,variableABC);
                 }else if(event.equals("3")){
-                    Event3(graph1,Start,Period,dive);
+                    Event3(graph1,Start,Period,dive,variableABC);
                 }else if(event.equals("4")){
                     Event4();
                 }else if(event.equals("5")){
@@ -203,7 +203,7 @@ public class Sociopath {
     }
     //end of event 2 --------------------------------------------------------------------------------------------
     
-    public static void Event3(WeightedGraph<Integer, Integer> graph1,int[]Start,int[]Period,int[]dive){
+    public static void Event3(WeightedGraph<Integer, Integer> graph1,int[]Start,int[]Period,int[]dive,int[]variableABC){
         System.out.println("Event 3----------------------------------------");
         Scanner scan = new Scanner(System.in);
         String [] day={"Monday","Tuesday","Wednesday","Thursday","Friday"};
@@ -285,7 +285,7 @@ public class Sociopath {
         CheckReputation(vertex,graph1);
            System.out.println("------------");
 
-           int a = 1;//initailiazie main character
+           int a = variableABC[0];//initailiazie main character
 
         //    int[]checkrelia =relia(vertex,graph1); //Find reliability of each student by finding its average rep among his friend
         //    System.out.println("----------------");
