@@ -161,6 +161,8 @@ public class Sociopath {
                 System.out.println("You guys have an unpleasant teaching-learning session.");
                 System.out.println("However, you guys still friends");
                 graph1.addEdge(b, a, 2); 
+                int getrep = (int) (graph1.getEdgeWeight(b, a));
+                getrep = getrep1-getrep;
                 System.out.println("Person "+b+" chit-chat with Person "+c+
                     " bad things about you. ("+ graph1.addEdge(c, a, getrep)+")\n");
 
