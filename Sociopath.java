@@ -21,11 +21,6 @@ public class Sociopath {
 
           initializeStartandPeriod(Start,Period,day);
 
-
-
-
-       
-
         //add vertex for all 10 students
         for (int i = 1; i < 11; i++){
             graph1.addVertex(i);   
@@ -61,7 +56,7 @@ public class Sociopath {
         try{
             System.out.println("\nList of events:");
             System.out.println("Event 1 = '1'\nEvent 2 = '2'\nEvent 3 = '3'\n" +
-                    "Event 4 = '4'\nEvent 5 = '5'\nEvent 6 = '6'\nFrenemies = '7'\n" +
+                    "Event 4 = '4'\nEvent 5 = '5'\nEvent 6 = '6'\nFrenemies = '7'\nSix Degree = '8'\n" +
                     "Check Reputation = '9'\nCheck Hate ='0'\n");
             System.out.print("Enter the event number(or type 'quit' to exit): ");
             String event = scan.nextLine();
@@ -78,6 +73,8 @@ public class Sociopath {
                     Event6();
                 }else if(event.equals("7")){
                     frenemies(graph1, graphEnemy);
+                }else if(event.equals("8"){
+                    SixDegree();
                 }else if(event.equals("9")){
                     CheckReputation(vertex,graph1);
                 }else if(event.equals("0")){
@@ -88,7 +85,7 @@ public class Sociopath {
                 }
                 System.out.println("\nList of events:");
                 System.out.println("Event 1 = '1'\nEvent 2 = '2'\nEvent 3 = '3'\n" +
-                        "Event 4 = '4'\nEvent 5 = '5'\nEvent 6 = '6'\nFrenemies = '7'\n" +
+                        "Event 4 = '4'\nEvent 5 = '5'\nEvent 6 = '6'\nFrenemies = '7'\nSix Degree = '8'\n" +
                         "Check Reputation = '9'\nCheck Hate ='0'\n");
                 System.out.print("Enter the event number(or type 'quit' to exit): ");
                 event = scan.nextLine();
@@ -902,5 +899,71 @@ public class Sociopath {
         }
     }
     // end of extra features 1 ------------------------------------------------------------------
+                         
+    //start of extra features 2 ------------------------------------------------------------------
+    public static void SixDegree() {
+        UnweightedGraph<Integer, Integer> graphSix = new UnweightedGraph<>();
+        //initialize graph
+        for(int i = 0; i < 11 ; i++ ){
+            graphSix.addVertex(i);
+        }
+        graphSix.addUndirectedEdge(0,1);
+        graphSix.addUndirectedEdge(1,2);
+        graphSix.addUndirectedEdge(1,3);
+        graphSix.addUndirectedEdge(2,3);
+        graphSix.addUndirectedEdge(2,4);
+        graphSix.addUndirectedEdge(3,4);
+        graphSix.addUndirectedEdge(4,5);
+        graphSix.addUndirectedEdge(4,6);
+        graphSix.addUndirectedEdge(5,6);
+        graphSix.addUndirectedEdge(5,8);
+        graphSix.addUndirectedEdge(6,7);
+        graphSix.addUndirectedEdge(6,8);
+        graphSix.addUndirectedEdge(6,9);
+        graphSix.addUndirectedEdge(7,9);
+        graphSix.addUndirectedEdge(8,9);
+        graphSix.addUndirectedEdge(9,10);
+
+        int size = graphSix.getSize();
+        System.out.println("Graph with you and Ken Thompson:");
+        graphSix.printEdges();
+        System.out.println();
+
+        //create the adjacency list
+        adjacencyList = new ArrayList[graphSix.getSize()];
+        for (int i = 0; i < graphSix.getSize(); i++) {
+            adjacencyList[i] = graphSix.getNeighbours(graphSix.getVertex(i));
+        }
+
+        Random input = new Random();
+
+        int you = input.nextInt(11);
+
+        int KenThompson = input.nextInt(11);
+
+        while(you == KenThompson){
+            KenThompson = input.nextInt(11);
+        }
+        System.out.println("You in position " + you);
+        System.out.println("Ken Thompson is in position " + KenThompson);
+
+
+        int dest = KenThompson;
+
+        findAllPaths(you,dest,size);
+
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println("All possible path according to Six Degree of Separation: ");
+
+        for (Integer[] x : sequence) {
+            if(x.length <= 7) {
+                System.out.println(Arrays.toString(x) + " --> The degree is " + (x.length - 1) + "\n");
+            }
+        }
+        //System.out.println("You are out of 6 degree with Ken Thompson");
+        sequence.clear();
+    }
+  // end of extra features 2 ------------------------------------------------------------------                     
+                         
 
 }
