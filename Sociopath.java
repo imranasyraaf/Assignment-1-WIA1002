@@ -203,7 +203,7 @@ public class Sociopath {
     }
     //end of event 2 --------------------------------------------------------------------------------------------
     
-    public static void Event3(WeightedGraph<Integer, Integer> graph1,int[]Start,int[]Period,int[]dive,int[]variableABC){
+    public static void Event3(WeightedGraph<Integer, Integer> graph1,int[]Starttemp,int[]Periodtemp,int[]divetemp,int[]variableABC){
         System.out.println("Event 3----------------------------------------");
         Scanner scan = new Scanner(System.in);
         String [] day={"Monday","Tuesday","Wednesday","Thursday","Friday"};
@@ -239,7 +239,17 @@ public class Sociopath {
         //     }
         //     System.out.println("");
         // }
-        
+        int [] dive = new int[10];
+        int[] Period = new int[10];
+         int[]Start = new int[10];
+
+        for (int i = 0; i < Periodtemp.length; i++) {
+            Period[i]=Periodtemp[i];
+            dive[i]=divetemp[i];
+            Start[i]=Starttemp[i];
+        }
+
+       
         //average time taken for lunch
         for (int i = 0; i < Period.length; i++) {
             Period[i]=Period[i]/5;
