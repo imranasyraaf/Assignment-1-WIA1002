@@ -73,7 +73,7 @@ public class Sociopath {
                     Event6();
                 }else if(event.equals("7")){
                     frenemies(graph1, graphEnemy);
-                }else if(event.equals("8"){
+                }else if(event.equals("8")){
                     SixDegree();
                 }else if(event.equals("9")){
                     CheckReputation(vertex,graph1);
