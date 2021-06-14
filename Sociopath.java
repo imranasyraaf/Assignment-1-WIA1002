@@ -213,7 +213,7 @@ public class Sociopath {
         int[] Period = new int[10];
          int[]Start = new int[10];
 
-        for (int i = 0; i < Periodtemp.length; i++) {
+        for (int i = 0; i < Periodtemp.length; i++) {//hold element passed from main method so that the event can run multiple times
             Period[i]=Periodtemp[i];
             dive[i]=divetemp[i];
             Start[i]=Starttemp[i];
@@ -238,7 +238,7 @@ public class Sociopath {
          }
         
         System.out.println("-----------------------");
-        System.out.println("Average start time for each student:");//For initialize lunch period
+        System.out.println("Average start time for each student:");//print average start time for each student
         for (int i = 0; i < Start.length; i++) {
             System.out.println("Student "+(i+1)+":"+Start[i]);
         }
@@ -248,12 +248,12 @@ public class Sociopath {
   
         
            System.out.println("-----------------------");
-        System.out.println("Average Lunch period(minute):");//For initialize lunch period
+        System.out.println("Average Lunch period(minute):");//print average lunc period for each student
         for (int i = 0; i < Period.length; i++) {
             System.out.println("Student "+(i+1)+":"+Period[i]);
         }
 
-        for (int i = 0; i < Start.length; i++) {//initialize start time and lunch period
+        for (int i = 0; i < Start.length; i++) {//initialize start time,lunch period and dive in vertex
             graph1.AddStart(vertex[i], Start[i]);
             graph1.AddLunch(vertex[i], Period[i]);
             graph1.AddDive(vertex[i], dive[i]);
@@ -267,19 +267,13 @@ public class Sociopath {
 
            int a = variableABC[0];//initailiazie main character
 
-        //    int[]checkrelia =relia(vertex,graph1); //Find reliability of each student by finding its average rep among his friend
-        //    System.out.println("----------------");
-        //    System.out.println("List of reliability:");
-        //  for (int i = 0; i < 10; i++) {//Get reliability of each student by getting their average rep among their friends
-     
-        //     System.out.println("Reliability student "+vertex[i]+" is "+checkrelia[i]);
-        //  }//sort the array astu
+      
 
              System.out.println("-----------------");
-             int[] prio =priorityReliability(dive,vertex);//Arrange student with highest reliability at top
+             int[] prio =priorityReliability(dive,vertex);//Arrange student with highest reliability at top which is the lowest dive
 
              System.out.println("Priority list according to reliability");
-         	for (int i = 0; i <prio.length ; i++) {//sort the student according to reliability ascending
+         	for (int i = 0; i <prio.length ; i++) {//sort the student according to dive rate ascending
                     System.out.println("Student: "+prio[i]);
         }
             
@@ -295,16 +289,16 @@ public class Sociopath {
              System.out.println("lunch period for student "+vertex[i]+": "+starttime[i]+"-"+endtime[i]);
         }
           
-          //to find number of student that can have lunch together at one time
-          ArrayList<Integer> maxrep = new ArrayList<>();
-         //use student 1 as the main character
+         
+          ArrayList<Integer> maxrep = new ArrayList<>();//array that hold student that can have lunch with main character
+         
          System.out.println("--------------------------");
          int num =a;
           System.out.println("The student that will find people to have lunch with is student:"+a);
           System.out.println("His lunch time is at "+starttime[a-1]+"-"+endtime[a-1]);
-         // int num = scan.nextInt();
+         
           System.out.println("--------------------------------------");
-          FindMaxReputation(a,prio,starttime,endtime,maxrep);//Find max reputation per day for a student
+          FindMaxReputation(a,prio,starttime,endtime,maxrep);//Find max reputation per day the main character will get
 
           System.out.println("List of people that student "+num+" can have lunch with:");
           for (int i = 0; i <maxrep.size(); i++) {//from this data we can add 1 to each rep and add as new friends if they are no friends yet relative to the main character
@@ -365,7 +359,7 @@ public class Sociopath {
                         
                      }
                     
-                     if(!BookShelf.isEmpty())
+                     if(!BookShelf.isEmpty())//if theres is still books left on right side
                      leftSide.push(BookShelf.pop());
                  }
              }
@@ -382,7 +376,7 @@ public class Sociopath {
            }
           if(temp==length)//check if number of book in bookshelf is still the same
               break;
-            System.out.println(copybook.toString());
+            System.out.println(copybook.toString());//print book that is left after the removing process
           round++;
               
         }
@@ -599,7 +593,7 @@ public class Sociopath {
     //end of event 6 -------------------------------------------------------------------
 
 
-    public static int changetime(int start,int min){
+    public static int changetime(int start,int min){//change time in 24 hours format
             
            
         int hold = start%100;
@@ -620,7 +614,7 @@ public class Sociopath {
             
        }
 
-       public static void CheckReputation(int[]vertex,WeightedGraph<Integer,Integer> graph){
+       public static void CheckReputation(int[]vertex,WeightedGraph<Integer,Integer> graph){//method to print all students reputations
         ArrayList<Integer> temp = new ArrayList<>();
         System.out.println("List of reputation");
         for (int i = 0; i < vertex.length; i++) {
@@ -636,48 +630,19 @@ public class Sociopath {
         }
     }
 
-    // public static int[] relia (int[] vertex,WeightedGraph<Integer,Integer> graph){//method find reliability
-          
-         
-    //     int[] listofreli = new int[10];
-    //     int[] numberofedges = new int[10];
+   
         
-       
-    //       for (int i = 0; i < 10; i++) {
-    //           ArrayList<Integer> temp = graph.getNeighbours(vertex[i]);
-    //         for (int j = 0; j < temp.size(); j++) {
-             
-    //               listofreli[i]+=graph.getEdgeWeight(vertex[i], temp.get(j));
-    //                 numberofedges[i]+=1;
-                
-                    
-                    
-    //         }
-            
-    //     }
-    //       int[] reliability = new int[10];
-    //       for (int i = 0; i < 10; i++) {
-    //           reliability[i] = listofreli[i]/numberofedges[i];
-             
-    //     }
-
-
-
-
-    //     return reliability; 
-    //     }   
-        
-        public static int[] priorityReliability (int[] checkrelia,int[]vertex){//method find reliability
+        public static int[] priorityReliability (int[] dive,int[]vertex){//method to sort student from low dive rate to high
           
          
             int[] prio = vertex.clone();
            for ( int pass = 1; pass < prio.length; pass++ ){
                   
             for ( int i = 0; i < prio.length - 1; i++ ) {
-                if ( checkrelia[ i ] > checkrelia[ i + 1 ] )  {
-                                    int hold = checkrelia[i];        
-                    checkrelia[i] = checkrelia[i+1];  
-                    checkrelia[i+1] = hold;
+                if ( dive[ i ] > dive[ i + 1 ] )  {
+                                    int hold = dive[i];        
+                    dive[i] = dive[i+1];  
+                    dive[i+1] = hold;
                                     int pegang =prio[i];
                                     prio[i]=prio[i+1];
                                     prio[i+1]=pegang;
@@ -713,11 +678,10 @@ public class Sociopath {
             }
           }
 
-          public static void FindMaxReputation(int a,int[]prio,int[]starttime,int[]endtime,ArrayList<Integer>maxrep){
+          public static void FindMaxReputation(int a,int[]prio,int[]starttime,int[]endtime,ArrayList<Integer>maxrep){//method to compare student lunch time that intersect with main character
           
             for (int i = 0; i <prio.length ; i++) {
                 if(maxrep.isEmpty()&&(starttime[a-1]>=starttime[prio[i]-1]&&endtime[a-1]<=endtime[prio[i]-1])&&prio[i]!=a){
-                    System.out.println("yahoo");
                      maxrep.add(prio[i]);//the main character lunch time is within other student lunch time 
                      break;
                 }
@@ -748,12 +712,12 @@ public class Sociopath {
               (endtime[prio[i]-1]>=starttime[a-1]&&endtime[prio[i]-1]<=endtime[a-1])))
                    &&!maxrep.isEmpty()
                    ){
-                 System.out.println("The student who pass is:"+prio[i]);
+                 System.out.println("The student who pass is:"+prio[i]);//the student who allowed to have lunch with main character
                int index = 0;
                for (int j = 0; j < maxrep.size(); j++) {
                    if((starttime[prio[i]-1]>=endtime[maxrep.get(j)-1])||
                         (endtime[prio[i]-1]<=starttime[maxrep.get(j)-1])   
-                          )
+                          )//to check if students that allowed to have lunch with main character intersect with one another
                    {
 
                        index++;
@@ -774,12 +738,12 @@ public class Sociopath {
        }
     }
 
-    public static void AddMaxRepPerDay(ArrayList<Integer>maxrep,int num,WeightedGraph<Integer,Integer>graph1){
+    public static void AddMaxRepPerDay(ArrayList<Integer>maxrep,int num,WeightedGraph<Integer,Integer>graph1){//method to add the reputation of main character toward students he have lunch with
             
         for (int i = 0; i < maxrep.size(); i++) {
         if(graph1.hasEdge(maxrep.get(i), num)){
           int hold = graph1.getEdgeWeight(maxrep.get(i), num);
-            System.out.println("huhuh");
+           
             graph1.removeEdge(maxrep.get(i), num);
             graph1.addEdge(maxrep.get(i), num, hold+1);
         }
@@ -789,7 +753,7 @@ public class Sociopath {
       }
       
     }
-    public static void initializeStartandPeriod(int[]Start,int[]Period,String[]day){
+    public static void initializeStartandPeriod(int[]Start,int[]Period,String[]day){//initaliaze start and lunch period
         System.out.println("Start time and time taken for lunch for every student:");
      for (int i = 0; i < Period.length; i++) {
          System.out.println("Student:"+(i+1));
